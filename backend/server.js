@@ -14,11 +14,7 @@ const app = express();
 // Настройка CORS
 app.use(
   cors({
-    origin: [
-      "http://localhost:5001",
-      "http://127.0.0.1:5001",
-      "https://business-network-platform-kolabora.onrender.com/",
-    ],
+    origin: ["http://localhost:5001", "http://127.0.0.1:5001"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -52,17 +48,6 @@ mongoose
       .catch((err) => console.error("Error listing collections:", err));
   })
   .catch((err) => console.error("MongoDB connection error:", err));
-
-// Статическая раздача фронтенда для продакшена
-if (process.env.NODE_ENV === "production") {
-  // Путь к статическим файлам Vue
-  app.use(express.static(path.join(__dirname, "../dist")));
-
-  // Для всех остальных маршрутов отдаем index.html (для SPA)
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../dist/index.html"));
-  });
-}
 
 // Определение маршрутов API
 app.use("/api/auth", require("./routes/auth"));
