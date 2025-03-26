@@ -8,13 +8,31 @@ const path = require("path");
 // Загрузка переменных окружения
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
+console.log("Current environment:", process.env.NODE_ENV);
+console.log("Static files path:", path.join(__dirname, "../dist"));
+
+// Статическая раздача фронтенда для продакшена
+if (process.env.NODE_ENV === "production") {
+  // Путь к статическим файлам
+  app.use(express.static(path.join(__dirname, "../dist")));
+
+  // Для всех остальных маршрутов отдаем index.html (для SPA)
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../dist/index.html"));
+  });
+}
+
 // Инициализация приложения Express
 const app = express();
 
 // Настройка CORS
 app.use(
   cors({
-    origin: ["http://localhost:5001", "http://127.0.0.1:5001"],
+    origin: [
+      "http://localhost:5001",
+      "http://127.0.0.1:5001",
+      "https://business-network-platform-kolabora.onrender.com/",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -48,6 +66,17 @@ mongoose
       .catch((err) => console.error("Error listing collections:", err));
   })
   .catch((err) => console.error("MongoDB connection error:", err));
+
+// Статическая раздача фронтенда для продакшена
+if (process.env.NODE_ENV === "production") {
+  // Путь к статическим файлам Vue
+  app.use(express.static(path.join(__dirname, "../dist")));
+
+  // Для всех остальных маршрутов отдаем index.html (для SPA)
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../dist/index.html"));
+  });
+}
 
 // Определение маршрутов API
 app.use("/api/auth", require("./routes/auth"));
