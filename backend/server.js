@@ -1,13 +1,3 @@
-console.log("Server startup - ENVIRONMENT:", process.env.NODE_ENV);
-console.log("API Routes:", [
-  "/api/auth",
-  "/api/users",
-  "/api/businesses",
-  "/api/categories",
-  "/api/reviews",
-  "/api/geocode",
-  "/api/messages",
-]);
 // backend/server.js
 const express = require("express");
 const mongoose = require("mongoose");
@@ -17,20 +7,6 @@ const path = require("path");
 
 // Загрузка переменных окружения
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
-
-console.log("Current environment:", process.env.NODE_ENV);
-console.log("Static files path:", path.join(__dirname, "../dist"));
-
-// Статическая раздача фронтенда для продакшена
-if (process.env.NODE_ENV === "production") {
-  // Путь к статическим файлам
-  app.use(express.static(path.join(__dirname, "../dist")));
-
-  // Для всех остальных маршрутов отдаем index.html (для SPA)
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../dist/index.html"));
-  });
-}
 
 // Инициализация приложения Express
 const app = express();
@@ -88,11 +64,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.path}`);
-  next();
-});
-
 // Определение маршрутов API
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/users", require("./routes/users"));
@@ -101,11 +72,6 @@ app.use("/api/categories", require("./routes/categories"));
 app.use("/api/reviews", require("./routes/reviews"));
 app.use("/api/geocode", require("./routes/geocode"));
 app.use("/api/messages", require("./routes/messages"));
-
-app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.path}`);
-  next();
-});
 
 // Обработка 404
 app.use((req, res) => {
@@ -122,15 +88,5 @@ app.use((err, req, res) => {
 // Определение порта
 const PORT = process.env.PORT || 5000;
 
+// Запуск сервера
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-// В server.js
-app.use(express.static(path.join(__dirname, "../dist")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../dist/index.html"));
-});
-
-console.log("Server startup - ENVIRONMENT:", process.env.NODE_ENV);
-console.log("Current directory:", __dirname);
-console.log("Resolved dist path:", path.resolve(__dirname, "../dist"));
