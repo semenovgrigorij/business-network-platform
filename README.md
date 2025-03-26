@@ -1,4 +1,4 @@
-# business-network-platform
+# business-network-platform-new
 
 ## Project setup
 ```

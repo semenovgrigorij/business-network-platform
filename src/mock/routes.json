@@ -1,0 +1,21 @@
+{
+  "/api/auth/login": "/auth/tokens",
+  "/api/auth/register": "/users",
+  "/api/users/profile": "/users/:id",
+  "/api/businesses": "/businesses",
+  "/api/businesses/:id": "/businesses/:id",
+  "/api/businesses/:id/reviews": "/reviews?businessId=:id",
+  "/api/categories": "/categories",
+  "/api/reviews": "/reviews",
+  "/api/reviews/:id": "/reviews/:id",
+  "/api/users/:id/reviews": "/reviews?userId=:id",
+  "/api/groups": "/groups",
+  "/api/groups/:id": "/groups/:id",
+  "/api/groups/:id/members": "/groupMembers?groupId=:id",
+  "/api/users/:id/groups": "/groupMembers?userId=:id",
+  "/api/conversations": "/conversations",
+  "/api/conversations/:id": "/conversations/:id",
+  "/api/conversations/:id/messages": "/messages?conversationId=:id",
+  "/api/messages/unread/count": "/messages?read=false&_count=true",
+  "/api/messages/read": "/messages"
+}

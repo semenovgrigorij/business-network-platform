@@ -1,17 +1,32 @@
+# OS generated files
 .DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Dependencies
 node_modules
 /dist
 
+# Build files
+/build
+/dist
 
-# local env files
+# Environment files (важно для безопасности)
+.env
 .env.local
 .env.*.local
+.env.development
+.env.test
+.env.production
 
 # Log files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+logs
+*.log
 
 # Editor directories and files
 .idea
@@ -21,3 +36,18 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Testing
+/coverage
+.nyc_output
+
+# Временные файлы
+.tmp
+.temp
+*.tmp
+*.bak
+*.swp
+
+# Прочие файлы
+.cache
+.nuxt
